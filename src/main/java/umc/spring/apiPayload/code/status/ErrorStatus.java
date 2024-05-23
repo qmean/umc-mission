@@ -2,7 +2,6 @@ package umc.spring.apiPayload.code.status;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import umc.spring.apiPayload.code.BaseErrorCode;
 import umc.spring.apiPayload.code.ErrorReasonDTO;
@@ -21,6 +20,13 @@ public enum ErrorStatus implements BaseErrorCode {
 
     // 예시
     ARCTICLE_NOT_FOUND(HttpStatus.BAD_REQUEST, "ARTICLE4001", "게시글이 없습니다."),
+
+    // store
+    STORE_NOT_FOUND(HttpStatus.BAD_REQUEST, "STORE4001", "가게가 없습니다"),
+
+    // mission
+    MISSION_NOT_FOUND(HttpStatus.BAD_REQUEST, "MISSION4001", "미션이 없습니다"),
+    MISSION_CHALLENGING(HttpStatus.BAD_REQUEST, "MISSION4002", "미션이 이미 진행중입니다"),
 
     TEMP_EXCEPTION(HttpStatus.BAD_REQUEST, "TEMP4001", "이거는 테스트")
     ;

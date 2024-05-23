@@ -2,6 +2,7 @@ package umc.spring.domain;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.ColumnDefault;
 import umc.spring.domain.common.BaseEntity;
 
 @Entity
@@ -18,7 +19,8 @@ public class Review extends BaseEntity {
     @Column(columnDefinition = "TEXT")
     private String content;
 
-    private float rating;
+    @Column(nullable = false)
+    private int rating;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id")
@@ -27,4 +29,21 @@ public class Review extends BaseEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "store_id")
     private Store store;
+
+    public void addMember(Member member) {
+        if (this.member != null) {
+            member.getReviews().remove(this);
+        }
+        this.member = member;
+        member.getReviews().add(this);
+    }
+
+    public void addStore(Store store) {
+        if (this.store != null) {
+            store.getReviews().remove(this);
+        }
+        this.store = store;
+        store.getReviews().add(this);
+        store.updateRating();
+    }
 }
