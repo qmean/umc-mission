@@ -3,7 +3,6 @@ package umc.spring.domain;
 import jakarta.persistence.*;
 import lombok.*;
 import umc.spring.domain.common.BaseEntity;
-import umc.spring.domain.enums.MissionStatus;
 import umc.spring.domain.mapping.MemberMission;
 
 import java.time.LocalDateTime;
@@ -36,7 +35,7 @@ public class Mission extends BaseEntity {
     @Column(nullable = false ,columnDefinition = "TEXT")
     private String missionUrl;
 
-    @OneToMany(mappedBy = "mission")
+    @OneToMany(mappedBy = "mission", cascade = CascadeType.ALL)
     private List<MemberMission> memberMissions = new ArrayList<>();
 
     @ManyToOne(fetch = FetchType.LAZY)
