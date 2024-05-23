@@ -24,16 +24,15 @@ public class Mission extends BaseEntity {
     @Column(nullable = false, length = 20)
     private String title;
 
-    @Column(nullable = false ,columnDefinition = "TEXT")
+    @Column(columnDefinition = "TEXT")
     private String content;
 
-    @Column(nullable = false)
     private LocalDateTime deadline;
 
     @Column(nullable = false)
     private int reward;
 
-    @Column(nullable = false ,columnDefinition = "TEXT")
+    @Column(columnDefinition = "TEXT")
     private String missionUrl;
 
     @OneToMany(mappedBy = "mission")
@@ -42,12 +41,4 @@ public class Mission extends BaseEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "store_id")
     private Store store;
-
-    public void addStore(Store store) {
-        if (this.store != null) {
-            this.store.getMissions().remove(this);
-        }
-        this.store = store;
-        store.getMissions().add(this);
-    }
 }
