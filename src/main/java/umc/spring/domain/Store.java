@@ -2,7 +2,9 @@ package umc.spring.domain;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.ColumnDefault;
 import umc.spring.domain.common.Address;
+import umc.spring.domain.common.BaseEntity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,7 +14,7 @@ import java.util.List;
 @Builder
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
-public class Store {
+public class Store extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -21,7 +23,9 @@ public class Store {
     @Column(nullable = false, length = 20)
     private String name;
 
-    private float rating;
+    @Column(nullable = false)
+    @ColumnDefault("0")
+    private int rating;
 
     private Address address;
 
@@ -30,4 +34,11 @@ public class Store {
 
     @OneToMany(mappedBy = "store", cascade = CascadeType.ALL)
     private List<Review> reviews = new ArrayList<>();
+
+    public void updateRating() {
+        long sum = reviews.stream()
+                .mapToLong(Review::getRating)
+                .sum();
+        this.rating = (int) (sum / reviews.size());
+    }
 }

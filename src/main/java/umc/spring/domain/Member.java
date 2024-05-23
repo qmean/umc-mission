@@ -2,6 +2,9 @@ package umc.spring.domain;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.ColumnDefault;
+import org.hibernate.annotations.DynamicInsert;
+import org.hibernate.annotations.DynamicUpdate;
 import umc.spring.domain.common.Address;
 import umc.spring.domain.common.BaseEntity;
 import umc.spring.domain.enums.Gender;
@@ -21,6 +24,8 @@ import java.util.List;
 @Builder
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
+@DynamicInsert
+@DynamicUpdate
 public class Member extends BaseEntity{
 
     @Id
@@ -31,24 +36,29 @@ public class Member extends BaseEntity{
     private String name;
 
     @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
     private Gender gender;
 
+    @Column(nullable = false)
     private LocalDate birth;
 
     @Embedded
+    @Column(nullable = false)
     private Address address;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
+    @ColumnDefault("'NONE'")
     private SocialLogin socialLogin;
 
     @Enumerated(EnumType.STRING)
-    @Column(columnDefinition = "VARCHAR(15) DEFAULT 'ACTIVE'")
+    @Column(columnDefinition = "VARCHAR(15) DEFAULT 'ACTIVE'", nullable = false)
     private MemberStatus active;
 
     private LocalDateTime inactiveTime;
 
-    @Column(nullable = false, columnDefinition = "INTEGER DEFAULT 0")
+    @Column(nullable = false)
+    @ColumnDefault("0")
     private Integer point;
 
     @Column(columnDefinition = "TEXT")
