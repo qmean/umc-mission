@@ -15,4 +15,10 @@ public class StoreRequestDto {
         @NotNull
         private Address address;
     }
+
+    @Getter
+    public static class ReviewDto {
+        private Integer rating;
+        private String content;
+    }
 }

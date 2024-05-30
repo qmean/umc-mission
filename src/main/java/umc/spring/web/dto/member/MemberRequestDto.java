@@ -25,7 +25,6 @@ public class MemberRequestDto {
     }
 
     @Getter
-//    @NotChallengingMission
     public static class JoinMissionDto{
         @ExistMission
         private Long missionId;
